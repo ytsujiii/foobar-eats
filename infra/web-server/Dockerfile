@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-  apt-get install -y openjdk-8-jdk wget unzip
+  apt-get install -y openjdk-8-jdk wget unzip make
 
 WORKDIR /home
 
