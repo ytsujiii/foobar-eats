@@ -32,6 +32,12 @@ services:
     networks:
       - sample-network
     restart: on-failure
+  java:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.java
+    volumes:
+      - ./:/home/src
 networks:
   sample-network:
     name: sample-network
