@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group 'org.sample'
@@ -13,10 +15,11 @@ repositories {
 dependencies {
     implementation 'com.scalar-labs:scalardb:3.5.2'
     implementation 'info.picocli:picocli:4.1.4'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 application {
-    mainClassName = 'sample.command.SampleCommand'
+    mainClassName = 'server.RestServiceApplication'
 }
 
 archivesBaseName = "sample"
