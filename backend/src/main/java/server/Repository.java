@@ -91,7 +91,6 @@ public class Repository implements AutoCloseable {
   }
 
   public Customer getCustomerInfo(int customerId) throws TransactionException {
-//  public String getCustomerInfo(int customerId) throws TransactionException {
     DistributedTransaction transaction = null;
     try {
       // Start a transaction
@@ -112,13 +111,6 @@ public class Repository implements AutoCloseable {
       // Commit the transaction (even when the transaction is read-only, we need to commit)
       transaction.commit();
 
-      // Return the customer info as a JSON format
-//      return String.format(
-//          "{\"id\": %d, \"name\": \"%s\", \"credit_limit\": %d, \"credit_total\": %d}",
-//          customerId,
-//          customer.get().getValue("name").get().getAsString().get(),
-//          customer.get().getValue("credit_limit").get().getAsInt(),
-//          customer.get().getValue("credit_total").get().getAsInt());
       return new Customer(
           customerId,
           customer.get().getValue("name").get().getAsString().get(),
