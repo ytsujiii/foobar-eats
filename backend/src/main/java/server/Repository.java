@@ -195,7 +195,7 @@ public class Repository implements AutoCloseable {
       transaction.commit();
 
       // Return the order id
-      return String.format("{\"order_id\": \"%s\"}", orderId);
+      return orderId;
     } catch (Exception e) {
       if (transaction != null) {
         // If an error occurs, abort the transaction
