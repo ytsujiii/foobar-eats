@@ -5,7 +5,7 @@ import styles from "./Header.module.scss";
 
 const Header = (): React.ReactElement => {
   return (
-    <AppBar>
+    <AppBar position="static">
       <Toolbar>
         <Box className={styles["margin"]} />
         <Typography className={styles["title"]} variant="h6">
