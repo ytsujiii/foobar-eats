@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PlaceOrderController {
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String placeOrder(@RequestBody OrderDto orderDto) throws Exception {
+
+    public String placeOrder(@RequestBody PlaceOrderRequestDto orderDto) throws Exception {
         try (Repository repository = new Repository()) {
             return repository.placeOrder(
                     orderDto.getCustomerId(),

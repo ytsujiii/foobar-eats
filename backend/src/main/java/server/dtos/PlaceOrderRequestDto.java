@@ -1,12 +1,12 @@
 package server;
 
-public class OrderDto {
+public class PlaceOrderRequestDto {
 
 	private final int customerId;
 	private final int[] itemIds;
 	private final int[] itemCounts;
 
-	public OrderDto(int customerId, int[] itemIds, int[] itemCounts) {
+	public PlaceOrderRequestDto(int customerId, int[] itemIds, int[] itemCounts) {
 		this.customerId = customerId;
 		this.itemIds = itemIds;
 		this.itemCounts = itemCounts;
