@@ -293,39 +293,39 @@ public class Repository implements AutoCloseable {
     }
   }
 
-//  public String getOrdersByCustomerId(int customerId) throws TransactionException {
-//    DistributedTransaction transaction = null;
-//    try {
-//      // Start a transaction
-//      transaction = manager.start();
-//
-//      // Retrieve the order info for the customer ID from the orders table
-//      List<Result> orders =
-//          transaction.scan(
-//              new Scan(new Key("customer_id", customerId))
-//                  .forNamespace("order")
-//                  .forTable("orders"));
-//
-//      // Make order JSONs for the orders of the customer
-//      List<String> orderJsons = new ArrayList<>();
-//      for (Result order : orders) {
-//        orderJsons.add(
-//            getOrderJson(transaction, order.getValue("order_id").get().getAsString().get()));
-//      }
-//
-//      // Commit the transaction (even when the transaction is read-only, we need to commit)
-//      transaction.commit();
-//
-//      // Return the order info as a JSON format
-//      return String.format("{\"order\": [%s]}", String.join(",", orderJsons));
-//    } catch (Exception e) {
-//      if (transaction != null) {
-//        // If an error occurs, abort the transaction
-//        transaction.abort();
-//      }
-//      throw e;
-//    }
-//  }
+  public ArrayList<OrderResponseDto> getOrdersByCustomerId(int customerId) throws TransactionException {
+    DistributedTransaction transaction = null;
+    try {
+      // Start a transaction
+      transaction = manager.start();
+
+      // Retrieve the order info for the customer ID from the orders table
+      List<Result> orders =
+          transaction.scan(
+              new Scan(new Key("customer_id", customerId))
+                  .forNamespace("order")
+                  .forTable("orders"));
+
+      // Make order JSONs for the orders of the customer
+      ArrayList<OrderResponseDto> orderDtos = new ArrayList<>();
+      for (Result order : orders) {
+        orderDtos.add(
+            getOrder(transaction, order.getValue("order_id").get().getAsString().get()));
+      }
+
+      // Commit the transaction (even when the transaction is read-only, we need to commit)
+      transaction.commit();
+
+      // Return the order info as a JSON format
+      return orderDtos;
+    } catch (Exception e) {
+      if (transaction != null) {
+        // If an error occurs, abort the transaction
+        transaction.abort();
+      }
+      throw e;
+    }
+  }
 
   public void repayment(int customerId, int amount) throws TransactionException {
     DistributedTransaction transaction = null;
