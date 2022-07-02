@@ -1,10 +1,12 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
+const App = (): React.ReactElement => {
   return (
-    <div>aaa</div>
+    <>
+      <div>aaa</div>
+    </>
   );
-}
+};
 
 export default App;
