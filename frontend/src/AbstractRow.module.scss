@@ -1,0 +1,13 @@
+.abstract-row {
+  display: flex;
+  align-items: center;
+
+  .star-icon {
+    font-size: 18px;
+    margin-right: 2px;
+  }
+
+  .rating {
+    margin-left: 4px;
+  }
+}

@@ -5,11 +5,11 @@ import styles from "./Header.module.scss";
 
 const Header = (): React.ReactElement => {
   return (
-    <AppBar position="static">
+    <AppBar className={styles["header"]}>
       <Toolbar>
         <Box className={styles["margin"]} />
         <Typography className={styles["title"]} variant="h6">
-          a
+          Apollo&apos;s Pizza
         </Typography>
         <IconButton>
           <MoreHorizIcon />

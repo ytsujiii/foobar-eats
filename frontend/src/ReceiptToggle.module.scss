@@ -1,0 +1,20 @@
+.toggle-button-group {
+  height: 50px;
+
+  .toggle-button {
+    text-transform: none;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+
+    .receipt {
+      color: black;
+      font-size: 0.9em;
+    }
+
+    .required-time {
+      color: gray;
+      font-size: 0.8em;
+    }
+  }
+}
