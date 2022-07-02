@@ -28,7 +28,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.(js|ts|jsx|tsx)'",
     "lint": "eslint src/ --ext .js,.ts,.jsx,.tsx --fix",
-    "stylelint": "stylelint src/**/*.scss --fix",
+    "stylelint": "stylelint 'src/**/*.{scss,css}' --fix",
     "fix": "npm run format && npm run lint && npm run stylelint"
   },
   "eslintConfig": {
