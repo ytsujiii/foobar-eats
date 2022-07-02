@@ -205,7 +205,7 @@ public class Repository implements AutoCloseable {
     }
   }
 
-  private String getOrderJson(DistributedTransaction transaction, String orderId)
+  private OrderResponseDto getOrder(DistributedTransaction transaction, String orderId)
       throws TransactionException {
     // Retrieve the order info for the order ID from the orders table
     Optional<Result> order =
@@ -230,7 +230,7 @@ public class Repository implements AutoCloseable {
             new Scan(new Key("order_id", orderId)).forNamespace("order").forTable("statements"));
 
     // Make the statements JSONs
-    List<String> statementJsons = new ArrayList<>();
+    ArrayList<StatementDto> statementDtos = new ArrayList<>();
     int total = 0;
     for (Result statement : statements) {
       int itemId = statement.getValue("item_id").get().getAsInt();
@@ -246,43 +246,44 @@ public class Repository implements AutoCloseable {
       int price = item.get().getValue("price").get().getAsInt();
       int count = statement.getValue("count").get().getAsInt();
 
-      statementJsons.add(
-          String.format(
-              "{\"item_id\": %d,\"item_name\": \"%s\",\"price\": %d,\"count\": %d,\"total\": %d}",
-              itemId,
-              item.get().getValue("name").get().getAsString().get(),
-              price,
-              count,
-              price * count));
+      StatementDto statementDto = new StatementDto(
+        itemId,
+        item.get().getValue("name").get().getAsString().get(),
+        price,
+        count,
+        price * count
+      );
+
+      statementDtos.add(statementDto);
 
       total += price * count;
     }
 
     // Return the order info as a JSON format
-    return String.format(
-        "{\"order_id\": \"%s\",\"timestamp\": %d,\"customer_id\": %d,\"customer_name\": \"%s\",\"statement\": [%s],\"total\": %d}",
-        orderId,
-        order.get().getValue("timestamp").get().getAsLong(),
-        customerId,
-        customer.get().getValue("name").get().getAsString().get(),
-        String.join(",", statementJsons),
-        total);
+    return new OrderResponseDto(
+      orderId,
+      order.get().getValue("timestamp").get().getAsLong(),
+      customerId,
+      customer.get().getValue("name").get().getAsString().get(),
+      statementDtos,
+      total
+    );
   }
 
-  public String getOrderByOrderId(String orderId) throws TransactionException {
+  public OrderResponseDto getOrderById(String id) throws TransactionException {
     DistributedTransaction transaction = null;
     try {
       // Start a transaction
       transaction = manager.start();
 
       // Get an order JSON for the specified order ID
-      String orderJson = getOrderJson(transaction, orderId);
+      OrderResponseDto order = getOrder(transaction, id);
 
       // Commit the transaction (even when the transaction is read-only, we need to commit)
       transaction.commit();
 
       // Return the order info as a JSON format
-      return String.format("{\"order\": %s}", orderJson);
+      return order;
     } catch (Exception e) {
       if (transaction != null) {
         // If an error occurs, abort the transaction
@@ -292,39 +293,39 @@ public class Repository implements AutoCloseable {
     }
   }
 
-  public String getOrdersByCustomerId(int customerId) throws TransactionException {
-    DistributedTransaction transaction = null;
-    try {
-      // Start a transaction
-      transaction = manager.start();
-
-      // Retrieve the order info for the customer ID from the orders table
-      List<Result> orders =
-          transaction.scan(
-              new Scan(new Key("customer_id", customerId))
-                  .forNamespace("order")
-                  .forTable("orders"));
-
-      // Make order JSONs for the orders of the customer
-      List<String> orderJsons = new ArrayList<>();
-      for (Result order : orders) {
-        orderJsons.add(
-            getOrderJson(transaction, order.getValue("order_id").get().getAsString().get()));
-      }
-
-      // Commit the transaction (even when the transaction is read-only, we need to commit)
-      transaction.commit();
-
-      // Return the order info as a JSON format
-      return String.format("{\"order\": [%s]}", String.join(",", orderJsons));
-    } catch (Exception e) {
-      if (transaction != null) {
-        // If an error occurs, abort the transaction
-        transaction.abort();
-      }
-      throw e;
-    }
-  }
+//  public String getOrdersByCustomerId(int customerId) throws TransactionException {
+//    DistributedTransaction transaction = null;
+//    try {
+//      // Start a transaction
+//      transaction = manager.start();
+//
+//      // Retrieve the order info for the customer ID from the orders table
+//      List<Result> orders =
+//          transaction.scan(
+//              new Scan(new Key("customer_id", customerId))
+//                  .forNamespace("order")
+//                  .forTable("orders"));
+//
+//      // Make order JSONs for the orders of the customer
+//      List<String> orderJsons = new ArrayList<>();
+//      for (Result order : orders) {
+//        orderJsons.add(
+//            getOrderJson(transaction, order.getValue("order_id").get().getAsString().get()));
+//      }
+//
+//      // Commit the transaction (even when the transaction is read-only, we need to commit)
+//      transaction.commit();
+//
+//      // Return the order info as a JSON format
+//      return String.format("{\"order\": [%s]}", String.join(",", orderJsons));
+//    } catch (Exception e) {
+//      if (transaction != null) {
+//        // If an error occurs, abort the transaction
+//        transaction.abort();
+//      }
+//      throw e;
+//    }
+//  }
 
   public void repayment(int customerId, int amount) throws TransactionException {
     DistributedTransaction transaction = null;
