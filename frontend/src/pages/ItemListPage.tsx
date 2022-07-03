@@ -35,7 +35,7 @@ const ItemListPage = (): React.ReactElement => {
           View cart (1)
         </Button>
       </div>
-      <CartView visible={cartViewVisible} setVisible={setCartViewVisible} />
+      <CartView visible={cartViewVisible} setVisible={setCartViewVisible} onProceed={() => navigate("/delivery")} />
     </>
   );
 };

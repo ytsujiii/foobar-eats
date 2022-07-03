@@ -1,0 +1,179 @@
+$footer-height: 110px;
+
+.container {
+  padding-top: 15px;
+  height: calc(100vh - #{$footer-height});
+  overflow-y: scroll;
+
+  .cancel-button-row {
+    .cancel-button {
+      color: black;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .title {
+    margin: 15px 0;
+  }
+
+  .toggle-button-group {
+    height: 40px;
+    margin: 10px 0;
+
+    .toggle-button {
+      text-transform: none;
+      margin: 5px;
+      display: flex;
+      flex-direction: column;
+
+      .receipt {
+        color: black;
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  .delivery-option-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0;
+
+    .leading-icon {
+      width: 50px;
+    }
+
+    .delivery-option-container {
+      flex: auto;
+      padding-left: 15px;
+    }
+  }
+
+  .delivery-time-row {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+
+    .label {
+      font-size: 1.2em;
+    }
+
+    .value {
+      font-size: 1.2em;
+    }
+  }
+
+  .items-label-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    .label {
+      font-size: 1.2em;
+    }
+
+    .see-menu-button {
+      color: green;
+      text-transform: none;
+    }
+  }
+
+  .menu-list {
+    .menu {
+      display: flex;
+      margin: 0 15px;
+      padding: 15px 0;
+      border-bottom: lightgray 1px solid;
+
+      .count-label-wrapper {
+        flex: 1;
+
+        .count-label {
+          background-color: #eee;
+          color: black;
+          width: 23px;
+          height: 23px;
+          font-size: 0.8em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .abstract-wrapper {
+        flex: 7;
+
+        .detail {
+          color: #777;
+        }
+      }
+
+      .price {
+        flex: 1;
+        width: 60px;
+        color: #666;
+        text-align: end;
+      }
+    }
+
+    .add-item-button-row {
+      margin: 0 15px;
+      padding: 15px 0;
+      border-bottom: lightgray 1px solid;
+
+      .add-item-button {
+        color: black;
+        background-color: #eee;
+        height: 37px;
+        width: 118px;
+        border-radius: 20px;
+        text-transform: none;
+      }
+    }
+  }
+
+  .fee-detail {
+    margin: 40px 0 80px;
+    padding: 0 8px;
+
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      .label-total {
+        font-weight: bold;
+      }
+      .value-total {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.footer {
+  border-top: lightgray 2px solid;
+  position: fixed;
+  bottom: 0;
+  height: $footer-height;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+
+  .confirm-button {
+    background-color: black;
+    color: white;
+    width: 100%;
+    margin: 0 15px 30px;
+    text-transform: none;
+    border-radius: 0;
+    height: 50px;
+    font-size: 1.1em;
+  }
+}

@@ -5,7 +5,7 @@ import ToggleButtonGroup from "./ToggleButtonGroup";
 
 const ReceiptToggle = (props: ToggleButtonGroupProps): React.ReactElement => {
   const { className, ...restProps } = props;
-  const [alignment, setAlignment] = React.useState("web");
+  const [alignment, setAlignment] = React.useState("delivery");
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);

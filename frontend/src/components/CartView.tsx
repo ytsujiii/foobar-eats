@@ -5,10 +5,11 @@ import styles from "./CartView.module.scss";
 interface Props {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  onProceed: () => void;
 }
 
 const CartView = (props: Props): React.ReactElement => {
-  const { visible, setVisible } = props;
+  const { visible, setVisible, onProceed } = props;
 
   const displayAttribute = useMemo<"inline-block" | "none">(() => {
     return visible ? "inline-block" : "none";
@@ -38,7 +39,9 @@ const CartView = (props: Props): React.ReactElement => {
           <Typography className={styles["subtotal-value"]}>$8.99</Typography>
         </div>
         <div className={styles["go-to-checkout-button-wrapper"]}>
-          <Button className={styles["go-to-checkout-button"]}>Go to checkout</Button>
+          <Button onClick={onProceed} className={styles["go-to-checkout-button"]}>
+            Go to checkout
+          </Button>
         </div>
       </Box>
     </>
