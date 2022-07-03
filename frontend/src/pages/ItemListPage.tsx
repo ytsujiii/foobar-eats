@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import AbstractRow from "../components/AbstractRow";
@@ -28,6 +28,9 @@ const ItemListPage = (): React.ReactElement => {
         <MenuRow onClick={() => navigate("/items/1")} />
         <MenuRow onClick={() => navigate("/items/1")} />
       </Container>
+      <div className={styles["view-cart-button-wrapper"]}>
+        <Button className={styles["view-cart-button"]}>View cart (1)</Button>
+      </div>
     </>
   );
 };

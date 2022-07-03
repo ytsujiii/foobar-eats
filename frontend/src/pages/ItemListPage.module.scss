@@ -13,3 +13,24 @@
     margin: 15px 0;
   }
 }
+
+.view-cart-button-wrapper {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+
+  .view-cart-button {
+    background-color: black;
+    color: white;
+    width: 100%;
+    margin: 0 15px;
+    text-transform: none;
+    border-radius: 0;
+    height: 50px;
+    font-size: 1.1em;
+  }
+}
