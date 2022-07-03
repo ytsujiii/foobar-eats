@@ -1,0 +1,79 @@
+.cancel-button-wrapper {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+
+  .cancel-button {
+    background-color: white;
+    color: black;
+  }
+}
+
+.thumbnail-wrapper {
+  width: 100%;
+
+  .thumbnail {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.abstract {
+  padding: 5px 15px 0;
+
+  .description {
+    font-size: 0.8em;
+    color: gray;
+    margin-bottom: 15px;
+  }
+}
+
+.heading {
+  background-color: #eee;
+  padding: 15px;
+  color: black;
+}
+
+.count-input-form-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin: 15px 0;
+
+  .count-value {
+    margin: 0 15px;
+  }
+
+  .count-button {
+    background-color: #eee;
+    width: 40px;
+    height: 40px;
+    color: black;
+    border-radius: 50%;
+  }
+}
+
+.footer {
+  border-top: lightgray 2px solid;
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 40px;
+
+  .add-to-cart-button {
+    background-color: black;
+    color: white;
+    width: 100%;
+    margin: 0 15px;
+    text-transform: none;
+    border-radius: 0;
+    height: 50px;
+    font-size: 1.1em;
+  }
+}
