@@ -1,7 +1,8 @@
 import { Button, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AbstractRow from "../components/AbstractRow";
+import CartView from "../components/CartView";
 import GroupOrderButton from "../components/GroupOrderButton";
 import Header from "../components/Header";
 import MenuRow from "../components/MenuRow";
@@ -11,6 +12,7 @@ import styles from "./ItemListPage.module.scss";
 
 const ItemListPage = (): React.ReactElement => {
   const navigate = useNavigate();
+  const [cartViewVisible, setCartViewVisible] = useState<boolean>(false);
 
   return (
     <>
@@ -29,8 +31,11 @@ const ItemListPage = (): React.ReactElement => {
         <MenuRow onClick={() => navigate("/items/1")} />
       </Container>
       <div className={styles["view-cart-button-wrapper"]}>
-        <Button className={styles["view-cart-button"]}>View cart (1)</Button>
+        <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>
+          View cart (1)
+        </Button>
       </div>
+      <CartView visible={cartViewVisible} setVisible={setCartViewVisible} />
     </>
   );
 };
