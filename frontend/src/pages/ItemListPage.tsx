@@ -1,5 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AbstractRow from "../components/AbstractRow";
 import GroupOrderButton from "../components/GroupOrderButton";
 import Header from "../components/Header";
@@ -9,6 +10,8 @@ import SearchBar from "../components/SearchBar";
 import styles from "./ItemListPage.module.scss";
 
 const ItemListPage = (): React.ReactElement => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Header />
@@ -19,11 +22,11 @@ const ItemListPage = (): React.ReactElement => {
         <ReceiptToggle className={styles["receipt-toggle"]} />
         <GroupOrderButton className={styles["group-order-button"]} />
         <SearchBar />
-        <MenuRow />
-        <MenuRow />
-        <MenuRow />
-        <MenuRow />
-        <MenuRow />
+        <MenuRow onClick={() => navigate("/items/1")} />
+        <MenuRow onClick={() => navigate("/items/1")} />
+        <MenuRow onClick={() => navigate("/items/1")} />
+        <MenuRow onClick={() => navigate("/items/1")} />
+        <MenuRow onClick={() => navigate("/items/1")} />
       </Container>
     </>
   );
