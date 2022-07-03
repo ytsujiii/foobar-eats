@@ -1,12 +1,12 @@
 import { Container, Typography } from "@mui/material";
 import React from "react";
-import AbstractRow from "./AbstractRow";
-import GroupOrderButton from "./GroupOrderButton";
-import Header from "./Header";
+import AbstractRow from "../components/AbstractRow";
+import GroupOrderButton from "../components/GroupOrderButton";
+import Header from "../components/Header";
+import MenuRow from "../components/MenuRow";
+import ReceiptToggle from "../components/ReceiptToggle";
+import SearchBar from "../components/SearchBar";
 import styles from "./ItemListPage.module.scss";
-import MenuRow from "./MenuRow";
-import ReceiptToggle from "./ReceiptToggle";
-import SearchBar from "./SearchBar";
 
 const ItemListPage = (): React.ReactElement => {
   return (
