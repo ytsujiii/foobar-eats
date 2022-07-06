@@ -30,10 +30,10 @@ const ItemListPage = (): React.ReactElement => {
         <GroupOrderButton className={styles["group-order-button"]} />
         <SearchBar />
         <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
+        <MenuRow onClick={() => navigate("/items/2")} />
+        <MenuRow onClick={() => navigate("/items/3")} />
+        <MenuRow onClick={() => navigate("/items/4")} />
+        <MenuRow onClick={() => navigate("/items/5")} />
       </Container>
       <div className={styles["view-cart-button-wrapper"]}>
         <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>

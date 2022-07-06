@@ -18,4 +18,17 @@ export default class Api {
       method: "GET",
     });
   }
+
+  public static async getItem1(){
+    return Promise.resolve({
+      'id': 1,
+      'name': 'this is item1',
+    });
+    return await this.request({
+      url: `/customer/`,
+      method: "GET",
+    });
+  }
+
+  
 }
