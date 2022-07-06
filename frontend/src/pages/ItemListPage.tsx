@@ -1,6 +1,7 @@
 import { Button, Container, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Api from "../api";
 import AbstractRow from "../components/AbstractRow";
 import CartView from "../components/CartView";
 import GroupOrderButton from "../components/GroupOrderButton";
@@ -13,6 +14,10 @@ import styles from "./ItemListPage.module.scss";
 const ItemListPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const [cartViewVisible, setCartViewVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    Api.getCustomerInfo(1).then((res) => console.log(res));
+  }, []);
 
   return (
     <>
