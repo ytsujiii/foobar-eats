@@ -9,6 +9,7 @@ import com.scalar.db.api.Scan;
 import com.scalar.db.config.DatabaseConfig;
 import com.scalar.db.exception.transaction.TransactionException;
 import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
 import com.scalar.db.service.TransactionFactory;
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +84,7 @@ public class Repository implements AutoCloseable {
     if (!item.isPresent()) {
       transaction.put(
           new Put(new Key("item_id", itemId))
+              .withValue("common_key", "common_key")
               .withValue("name", name)
               .withValue("price", price)
               .forNamespace("order")
