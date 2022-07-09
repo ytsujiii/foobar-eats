@@ -9,4 +9,4 @@ web:
 build:
 	@make build-backend
 build-backend:
-	cd backend && gradle build
+	cd backend && ./gradlew build
