@@ -18,10 +18,7 @@ const ItemListPage = (): React.ReactElement => {
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    Api.getItems().then((res) => {
-      console.log(res);
-      setItems(res);
-    });
+    Api.getItems().then((res) => setItems(res));
   }, []);
 
   return (
