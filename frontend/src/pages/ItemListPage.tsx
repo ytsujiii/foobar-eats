@@ -9,14 +9,16 @@ import Header from "../components/Header";
 import MenuRow from "../components/MenuRow";
 import ReceiptToggle from "../components/ReceiptToggle";
 import SearchBar from "../components/SearchBar";
+import Item from "../types/Item";
 import styles from "./ItemListPage.module.scss";
 
 const ItemListPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const [cartViewVisible, setCartViewVisible] = useState<boolean>(false);
+  const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    Api.getCustomerInfo(1).then((res) => console.log(res));
+    Api.getItems().then((response) => setItems(response));
   }, []);
 
   return (
@@ -29,11 +31,9 @@ const ItemListPage = (): React.ReactElement => {
         <ReceiptToggle className={styles["receipt-toggle"]} />
         <GroupOrderButton className={styles["group-order-button"]} />
         <SearchBar />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
-        <MenuRow onClick={() => navigate("/items/1")} />
+        {items.map((item) => (
+          <MenuRow key={item.itemId} onClick={() => navigate(`/items/${item.itemId}`)} />
+        ))}
       </Container>
       <div className={styles["view-cart-button-wrapper"]}>
         <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>
