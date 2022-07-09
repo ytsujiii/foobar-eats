@@ -49,8 +49,12 @@
     ],
     "columns": {
       "item_id": "INT",
+      "common_key": "TEXT",
       "name": "TEXT",
       "price": "INT"
-    }
+    },
+    "secondary-index": [
+      "common_key"
+    ]
   }
 }
