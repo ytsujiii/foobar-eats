@@ -4,19 +4,19 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./ItemDetailPage.module.scss";
 import Api from "../api";
+import styles from "./ItemDetailPage.module.scss";
 
 const ItemDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
-  const [item,setItem]=useState<any>();
+  const [item, setItem] = useState<any>();
 
   useEffect(() => {
     Api.getItem1().then((res) => {
-      setItem(res)
+      setItem(res);
     });
   }, []);
-  
+
   return (
     <>
       <div className={styles["cancel-button-wrapper"]}>
