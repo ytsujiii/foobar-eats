@@ -370,6 +370,36 @@ public class Repository implements AutoCloseable {
     }
   }
 
+  public ArrayList<ItemDto> getItems() throws TransactionException {
+    DistributedTransaction transaction = null;
+    try {
+      transaction = manager.start();
+
+      List<Result> items = transaction.scan(
+                      new Scan(new Key(new TextValue("common_key", "common_key")))
+                              .forNamespace("order")
+                              .forTable("items"));
+
+      ArrayList<ItemDto> itemDtos = new ArrayList<ItemDto>();
+      for (Result item : items) {
+        int itemId = item.getValue("item_id").get().getAsInt();
+        String name = item.getValue("name").get().getAsString().get();
+        int price = item.getValue("price").get().getAsInt();
+
+        itemDtos.add(new ItemDto(itemId, name, price));
+      }
+
+      transaction.commit();
+
+      return itemDtos;
+    } catch (Exception e) {
+      if (transaction != null) {
+        transaction.abort();
+      }
+      throw e;
+    }
+  }
+
   @Override
   public void close() {
     manager.close();
