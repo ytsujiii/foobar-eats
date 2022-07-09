@@ -400,6 +400,29 @@ public class Repository implements AutoCloseable {
     }
   }
 
+  public ItemDto getItem(int itemId) throws TransactionException {
+    DistributedTransaction transaction = null;
+    try {
+      transaction = manager.start();
+
+      Optional<Result> item = transaction.get(
+              new Get(new Key("item_id", itemId)).forNamespace("order").forTable("items"));
+
+      int resultItemId = item.get().getValue("item_id").get().getAsInt();
+      String name = item.get().getValue("name").get().getAsString().get();
+      int price = item.get().getValue("price").get().getAsInt();
+
+      transaction.commit();
+
+      return new ItemDto(resultItemId, name, price);
+    } catch (Exception e) {
+      if (transaction != null) {
+        transaction.abort();
+      }
+      throw e;
+    }
+  }
+
   @Override
   public void close() {
     manager.close();
