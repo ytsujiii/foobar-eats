@@ -32,7 +32,12 @@ const ItemListPage = (): React.ReactElement => {
         <GroupOrderButton className={styles["group-order-button"]} />
         <SearchBar />
         {items.map((item) => (
-          <MenuRow key={item.itemId} onClick={() => navigate(`/items/${item.itemId}`)} />
+          <MenuRow
+            key={item.itemId}
+            name={item.name}
+            price={item.price}
+            onClick={() => navigate(`/items/${item.itemId}`)}
+          />
         ))}
       </Container>
       <div className={styles["view-cart-button-wrapper"]}>
