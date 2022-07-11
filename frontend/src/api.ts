@@ -3,7 +3,7 @@ import Item from "./types/Item";
 import Order from "./types/Order";
 
 const client = axios.create({
-  baseURL: "http://192.168.8.159:8080",
+  baseURL: "http://localhost:8080",
 });
 
 type EmptyObject = Record<string, never>;

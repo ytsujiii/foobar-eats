@@ -13,8 +13,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("Content-Type");
+        corsConfiguration.addAllowedMethod("*");
 
-        http.cors().configurationSource(request -> corsConfiguration);
+        http.csrf().disable().cors().configurationSource(request -> corsConfiguration);
     }
 }
