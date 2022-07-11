@@ -2,12 +2,25 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, IconButton, Typography } from "@mui/material";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Api from "../api";
+import Item from "../types/Item";
 import styles from "./ItemDetailPage.module.scss";
 
 const ItemDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
+  const { itemId: itemIdString } = useParams();
+  const [item, setItem] = useState<Item>();
+  const [count, setCount] = useState<number>(0);
+
+  useEffect(() => {
+    const itemId = Number(itemIdString);
+
+    if (!itemId) return;
+
+    Api.getItem(itemId).then((response) => setItem(response));
+  }, [itemIdString]);
 
   return (
     <>
@@ -20,19 +33,19 @@ const ItemDetailPage = (): React.ReactElement => {
         <img className={styles["thumbnail"]} src="/images/pizza1.jpg" alt="" />
       </div>
       <div className={styles["abstract"]}>
-        <Typography variant="h5">Fantastic Pizza</Typography>
-        <Typography variant="h6">$8.99</Typography>
+        <Typography variant="h5">{item?.name}</Typography>
+        <Typography variant="h6">¥{item?.price}</Typography>
         <Typography className={styles["description"]}>
           A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
         </Typography>
       </div>
       <Typography className={styles["heading"]}>Special Instructions</Typography>
       <div className={styles["count-input-form-group"]}>
-        <IconButton className={styles["count-button"]}>
+        <IconButton onClick={() => setCount(count - 1)} className={styles["count-button"]}>
           <RemoveIcon />
         </IconButton>
-        <Typography className={styles["count-value"]}>1</Typography>
-        <IconButton className={styles["count-button"]}>
+        <Typography className={styles["count-value"]}>{count}</Typography>
+        <IconButton onClick={() => setCount(count + 1)} className={styles["count-button"]}>
           <AddIcon />
         </IconButton>
       </div>
