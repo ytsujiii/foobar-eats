@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import MenuRow from "../components/MenuRow";
 import ReceiptToggle from "../components/ReceiptToggle";
 import SearchBar from "../components/SearchBar";
+import useCartContext from "../hooks/useCartContext";
 import Item from "../types/Item";
 import styles from "./ItemListPage.module.scss";
 
@@ -16,6 +17,7 @@ const ItemListPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const [cartViewVisible, setCartViewVisible] = useState<boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
+  const { cartItems } = useCartContext();
 
   useEffect(() => {
     Api.getItems().then((response) => setItems(response));
@@ -42,7 +44,7 @@ const ItemListPage = (): React.ReactElement => {
       </Container>
       <div className={styles["view-cart-button-wrapper"]}>
         <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>
-          View cart (1)
+          View cart ({cartItems.length})
         </Button>
       </div>
       <CartView visible={cartViewVisible} setVisible={setCartViewVisible} onProceed={() => navigate("/delivery")} />
