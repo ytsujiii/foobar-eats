@@ -9,6 +9,7 @@ import com.scalar.db.api.Scan;
 import com.scalar.db.config.DatabaseConfig;
 import com.scalar.db.exception.transaction.TransactionException;
 import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
 import com.scalar.db.service.TransactionFactory;
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +84,7 @@ public class Repository implements AutoCloseable {
     if (!item.isPresent()) {
       transaction.put(
           new Put(new Key("item_id", itemId))
+              .withValue("common_key", "common_key")
               .withValue("name", name)
               .withValue("price", price)
               .forNamespace("order")
@@ -362,6 +364,59 @@ public class Repository implements AutoCloseable {
     } catch (Exception e) {
       if (transaction != null) {
         // If an error occurs, abort the transaction
+        transaction.abort();
+      }
+      throw e;
+    }
+  }
+
+  public ArrayList<ItemDto> getItems() throws TransactionException {
+    DistributedTransaction transaction = null;
+    try {
+      transaction = manager.start();
+
+      List<Result> items = transaction.scan(
+                      new Scan(new Key(new TextValue("common_key", "common_key")))
+                              .forNamespace("order")
+                              .forTable("items"));
+
+      ArrayList<ItemDto> itemDtos = new ArrayList<ItemDto>();
+      for (Result item : items) {
+        int itemId = item.getValue("item_id").get().getAsInt();
+        String name = item.getValue("name").get().getAsString().get();
+        int price = item.getValue("price").get().getAsInt();
+
+        itemDtos.add(new ItemDto(itemId, name, price));
+      }
+
+      transaction.commit();
+
+      return itemDtos;
+    } catch (Exception e) {
+      if (transaction != null) {
+        transaction.abort();
+      }
+      throw e;
+    }
+  }
+
+  public ItemDto getItem(int itemId) throws TransactionException {
+    DistributedTransaction transaction = null;
+    try {
+      transaction = manager.start();
+
+      Optional<Result> item = transaction.get(
+              new Get(new Key("item_id", itemId)).forNamespace("order").forTable("items"));
+
+      int resultItemId = item.get().getValue("item_id").get().getAsInt();
+      String name = item.get().getValue("name").get().getAsString().get();
+      int price = item.get().getValue("price").get().getAsInt();
+
+      transaction.commit();
+
+      return new ItemDto(resultItemId, name, price);
+    } catch (Exception e) {
+      if (transaction != null) {
         transaction.abort();
       }
       throw e;

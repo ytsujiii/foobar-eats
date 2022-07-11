@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import Item from "./types/Item";
 
 const client = axios.create({
   baseURL: "http://localhost:8080",
@@ -19,13 +20,9 @@ export default class Api {
     });
   }
 
-  public static async getItem1() {
-    return Promise.resolve({
-      id: 1,
-      name: "this is item1",
-    });
+  public static async getItems(): Promise<Item[]> {
     return await this.request({
-      url: `/customer/`,
+      url: `/items`,
       method: "GET",
     });
   }
