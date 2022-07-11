@@ -26,4 +26,11 @@ export default class Api {
       method: "GET",
     });
   }
+
+  public static async getItem(itemId: number): Promise<Item> {
+    return await this.request({
+      url: `/items/${itemId}`,
+      method: "GET",
+    });
+  }
 }
