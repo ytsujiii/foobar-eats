@@ -6,6 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Button, Container, IconButton, ToggleButton, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Api from "../api";
 import ToggleButtonGroup from "../components/ToggleButtonGroup";
 import styles from "./DeliveryDetailPage.module.scss";
 
@@ -17,6 +18,9 @@ const DeliveryDetailPage = (): React.ReactElement => {
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
   };
+  const sendOrder = () => {
+    Api.sendOrder({customerId: 1,itemIds: [2,3],itemCounts: [0,0]})
+  }
 
   return (
     <>
@@ -99,7 +103,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
         </div>
       </Container>
       <div className={styles["footer"]}>
-        <Button onClick={() => navigate("/items")} className={styles["confirm-button"]}>
+        <Button onClick={sendOrder} className={styles["confirm-button"]}>
           Confirm・$8.99
         </Button>
       </div>

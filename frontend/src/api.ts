@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
 import Item from "./types/Item";
+import Order from "./types/Order";
 
 const client = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://192.168.8.159:8080",
 });
 
 type EmptyObject = Record<string, never>;
@@ -33,4 +34,13 @@ export default class Api {
       method: "GET",
     });
   }
+
+  public static async sendOrder(order: Order): Promise<Item> {
+    return await this.request({
+      url: `/order`,
+      method: "POST",
+      data: order,
+    });
+  }
+
 }
