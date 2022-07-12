@@ -4,16 +4,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Container, IconButton, ToggleButton, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../api";
 import ToggleButtonGroup from "../components/ToggleButtonGroup";
+import useCartContext from "../hooks/useCartContext";
+import Item from "../types/Item";
 import styles from "./DeliveryDetailPage.module.scss";
 
 const DeliveryDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
 
   const [alignment, setAlignment] = React.useState("delivery");
+  const { cartItems } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
@@ -68,25 +71,29 @@ const DeliveryDetailPage = (): React.ReactElement => {
           <Button className={styles["see-menu-button"]}>See menu</Button>
         </div>
 
+
         <div className={styles["menu-list"]}>
-          <div className={styles["menu"]}>
+        </div>
+
+        {cartItems.map((item => (
+          <><div className={styles["menu"]}>
             <div className={styles["count-label-wrapper"]}>
-              <Typography className={styles["count-label"]}>1</Typography>
+              <Typography className={styles["count-label"]}>{item.count}</Typography>
             </div>
             <div className={styles["abstract-wrapper"]}>
-              <Typography className={styles["item-name"]}>Fantastic Pizza</Typography>
+              <Typography className={styles["item-name"]}>{item.content.name}</Typography>
               <Typography className={styles["detail"]}>
                 A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
               </Typography>
             </div>
-            <Typography className={styles["price"]}>$8.99</Typography>
-          </div>
-          <div className={styles["add-item-button-row"]}>
-            <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
-              Add items
-            </Button>
-          </div>
-        </div>
+            <Typography className={styles["price"]}>{item.content.price}</Typography>
+          </div><div className={styles["add-item-button-row"]}>
+              <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
+                Add items
+              </Button>
+            </div></>
+        )))}
+
         <div className={styles["fee-detail"]}>
           <div className={styles["fee-row"]}>
             <Typography>Subtotal</Typography>
