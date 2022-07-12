@@ -2,10 +2,10 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, IconButton, Typography } from "@mui/material";
-import React, { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import React, { useCallback, useMemo, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Api from "../api";
 import useCartContext from "../hooks/useCartContext";
+import useItemContext from "../hooks/useItemContext";
 import Item from "../types/Item";
 import styles from "./ItemDetailPage.module.scss";
 
@@ -14,8 +14,8 @@ type CountReducerAction = "increment" | "decrement";
 const ItemDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const { itemId: itemIdString } = useParams();
-  const [item, setItem] = useState<Item>();
   const { addItem } = useCartContext();
+  const { findItem } = useItemContext();
 
   const countReducer = (state: number, action: CountReducerAction): number => {
     switch (action) {
@@ -29,16 +29,11 @@ const ItemDetailPage = (): React.ReactElement => {
   const [count, dispatch] = useReducer(countReducer, 0);
 
   const itemId = useMemo(() => Number(itemIdString), [itemIdString]);
+  const item = useMemo<Item | undefined>(() => findItem(itemId), [findItem]);
   const amount = useMemo<number>(() => {
     if (!item?.price) return 0;
     return item.price * count;
   }, [item, count]);
-
-  useEffect(() => {
-    if (!itemId) return;
-
-    Api.getItem(itemId).then((response) => setItem(response));
-  }, [itemIdString]);
 
   const addToCart = useCallback(() => {
     if (!itemId || !item) return;
