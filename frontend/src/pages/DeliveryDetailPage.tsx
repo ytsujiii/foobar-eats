@@ -34,7 +34,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
       itemIds: itemIds,
       itemCounts: itemCounts,
     };
-    Api.sendOrder(order);
+    Api.sendOrder(order).then(() => navigate("/orders"))
   }, [cartItems]);
 
   return (
