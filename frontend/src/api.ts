@@ -3,7 +3,7 @@ import Item from "./types/Item";
 import Order from "./types/Order";
 
 const client = axios.create({
-  baseURL: "http://192.168.8.159:8080",
+  baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
 type EmptyObject = Record<string, never>;
@@ -42,5 +42,4 @@ export default class Api {
       data: order,
     });
   }
-
 }
