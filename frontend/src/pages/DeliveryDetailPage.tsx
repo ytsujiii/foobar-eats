@@ -15,7 +15,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
 
   const [alignment, setAlignment] = React.useState("delivery");
-  const { cartItems } = useCartContext();
+  const { cartItems, total } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
@@ -97,21 +97,21 @@ const DeliveryDetailPage = (): React.ReactElement => {
         <div className={styles["fee-detail"]}>
           <div className={styles["fee-row"]}>
             <Typography>Subtotal</Typography>
-            <Typography>$8.99</Typography>
+            <Typography>¥{total}</Typography>
           </div>
           <div className={styles["fee-row"]}>
             <Typography>Delivery Fee</Typography>
-            <Typography>$0.00</Typography>
+            <Typography>¥0</Typography>
           </div>
           <div className={styles["fee-row"]}>
             <Typography className={styles["label-total"]}>Total</Typography>
-            <Typography className={styles["value-total"]}>$8.99</Typography>
+            <Typography className={styles["value-total"]}>¥{total}</Typography>
           </div>
         </div>
       </Container>
       <div className={styles["footer"]}>
         <Button onClick={sendOrder} className={styles["confirm-button"]}>
-          Confirm・$8.99
+          Confirm・¥{total}
         </Button>
       </div>
     </>
