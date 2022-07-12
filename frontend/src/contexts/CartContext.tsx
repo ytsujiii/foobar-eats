@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import Item from "../types/Item";
 
 interface CartItem {
@@ -8,6 +8,7 @@ interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
+  total: number;
   addItem: (item: Item, count: number) => void;
   incrementItem: (item: Item) => void;
   decrementItem: (itemId: number) => void;
@@ -15,6 +16,7 @@ interface CartContextType {
 
 const defaultValue: CartContextType = {
   cartItems: [],
+  total: 0,
   addItem: () => {
     /* do nothing */
   },
@@ -66,8 +68,16 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
     [findItem]
   );
 
+  const total = useMemo(() => {
+    let total = 0;
+    cartItems.current.forEach((element) => {
+      total += element.content.price * element.count;
+    });
+    return total;
+  }, [cartItems.current]);
+
   return (
-    <CartContext.Provider value={{ cartItems: cartItems.current, incrementItem, decrementItem, addItem }}>
+    <CartContext.Provider value={{ cartItems: cartItems.current, incrementItem, decrementItem, addItem, total }}>
       {props.children}
     </CartContext.Provider>
   );
