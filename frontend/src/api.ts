@@ -6,8 +6,6 @@ const client = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
-type EmptyObject = Record<string, never>;
-
 export default class Api {
   private static async request<T>(config: AxiosRequestConfig): Promise<T> {
     const response = await client.request(config);

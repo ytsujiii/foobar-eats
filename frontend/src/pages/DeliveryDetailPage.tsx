@@ -4,23 +4,38 @@ import CloseIcon from "@mui/icons-material/Close";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Container, IconButton, ToggleButton, Typography } from "@mui/material";
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../api";
 import ToggleButtonGroup from "../components/ToggleButtonGroup";
+import useCartContext from "../hooks/useCartContext";
+import Order from "../types/Order";
 import styles from "./DeliveryDetailPage.module.scss";
 
 const DeliveryDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
 
   const [alignment, setAlignment] = React.useState("delivery");
+  const { cartItems, total } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
   };
-  const sendOrder = () => {
-    Api.sendOrder({customerId: 1,itemIds: [2,3],itemCounts: [0,0]})
-  }
+  const sendOrder = useCallback(() => {
+    const itemIds: number[] = [];
+    const itemCounts: number[] = [];
+    cartItems.forEach((item) => {
+      itemIds.push(item.content.itemId);
+      itemCounts.push(item.count);
+    });
+
+    const order: Order = {
+      customerId: 1,
+      itemIds: itemIds,
+      itemCounts: itemCounts,
+    };
+    Api.sendOrder(order);
+  }, [cartItems]);
 
   return (
     <>
@@ -69,42 +84,47 @@ const DeliveryDetailPage = (): React.ReactElement => {
         </div>
 
         <div className={styles["menu-list"]}>
-          <div className={styles["menu"]}>
-            <div className={styles["count-label-wrapper"]}>
-              <Typography className={styles["count-label"]}>1</Typography>
+          {cartItems.map((item) => (
+            <div key={item.content.itemId}>
+              <div className={styles["menu"]}>
+                <div className={styles["count-label-wrapper"]}>
+                  <Typography className={styles["count-label"]}>{item.count}</Typography>
+                </div>
+                <div className={styles["abstract-wrapper"]}>
+                  <Typography className={styles["item-name"]}>{item.content.name}</Typography>
+                  <Typography className={styles["detail"]}>
+                    A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
+                  </Typography>
+                </div>
+                <Typography className={styles["price"]}>¥{item.content.price}</Typography>
+              </div>
+              <div className={styles["add-item-button-row"]}>
+                <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
+                  Add items
+                </Button>
+              </div>
             </div>
-            <div className={styles["abstract-wrapper"]}>
-              <Typography className={styles["item-name"]}>Fantastic Pizza</Typography>
-              <Typography className={styles["detail"]}>
-                A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
-              </Typography>
-            </div>
-            <Typography className={styles["price"]}>$8.99</Typography>
-          </div>
-          <div className={styles["add-item-button-row"]}>
-            <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
-              Add items
-            </Button>
-          </div>
+          ))}
         </div>
+
         <div className={styles["fee-detail"]}>
           <div className={styles["fee-row"]}>
             <Typography>Subtotal</Typography>
-            <Typography>$8.99</Typography>
+            <Typography>¥{total}</Typography>
           </div>
           <div className={styles["fee-row"]}>
             <Typography>Delivery Fee</Typography>
-            <Typography>$0.00</Typography>
+            <Typography>¥0</Typography>
           </div>
           <div className={styles["fee-row"]}>
             <Typography className={styles["label-total"]}>Total</Typography>
-            <Typography className={styles["value-total"]}>$8.99</Typography>
+            <Typography className={styles["value-total"]}>¥{total}</Typography>
           </div>
         </div>
       </Container>
       <div className={styles["footer"]}>
         <Button onClick={sendOrder} className={styles["confirm-button"]}>
-          Confirm・$8.99
+          Confirm・¥{total}
         </Button>
       </div>
     </>
