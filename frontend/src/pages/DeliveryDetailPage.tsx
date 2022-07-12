@@ -16,7 +16,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
 
   const [alignment, setAlignment] = React.useState("delivery");
-  const { cartItems, total } = useCartContext();
+  const { cartItems, getTotal } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
@@ -36,6 +36,8 @@ const DeliveryDetailPage = (): React.ReactElement => {
     };
     Api.sendOrder(order);
   }, [cartItems]);
+
+  const total = getTotal();
 
   return (
     <>
