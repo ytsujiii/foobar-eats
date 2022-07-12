@@ -71,28 +71,29 @@ const DeliveryDetailPage = (): React.ReactElement => {
           <Button className={styles["see-menu-button"]}>See menu</Button>
         </div>
 
-
         <div className={styles["menu-list"]}>
+          {cartItems.map((item) => (
+            <>
+              <div className={styles["menu"]}>
+                <div className={styles["count-label-wrapper"]}>
+                  <Typography className={styles["count-label"]}>{item.count}</Typography>
+                </div>
+                <div className={styles["abstract-wrapper"]}>
+                  <Typography className={styles["item-name"]}>{item.content.name}</Typography>
+                  <Typography className={styles["detail"]}>
+                    A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
+                  </Typography>
+                </div>
+                <Typography className={styles["price"]}>¥{item.content.price}</Typography>
+              </div>
+              <div className={styles["add-item-button-row"]}>
+                <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
+                  Add items
+                </Button>
+              </div>
+            </>
+          ))}
         </div>
-
-        {cartItems.map((item => (
-          <><div className={styles["menu"]}>
-            <div className={styles["count-label-wrapper"]}>
-              <Typography className={styles["count-label"]}>{item.count}</Typography>
-            </div>
-            <div className={styles["abstract-wrapper"]}>
-              <Typography className={styles["item-name"]}>{item.content.name}</Typography>
-              <Typography className={styles["detail"]}>
-                A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
-              </Typography>
-            </div>
-            <Typography className={styles["price"]}>{item.content.price}</Typography>
-          </div><div className={styles["add-item-button-row"]}>
-              <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
-                Add items
-              </Button>
-            </div></>
-        )))}
 
         <div className={styles["fee-detail"]}>
           <div className={styles["fee-row"]}>
