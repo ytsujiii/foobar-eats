@@ -72,7 +72,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
 
         <div className={styles["menu-list"]}>
           {cartItems.map((item) => (
-            <>
+            <div key={item.content.itemId}>
               <div className={styles["menu"]}>
                 <div className={styles["count-label-wrapper"]}>
                   <Typography className={styles["count-label"]}>{item.count}</Typography>
@@ -90,7 +90,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
                   Add items
                 </Button>
               </div>
-            </>
+            </div>
           ))}
         </div>
 
