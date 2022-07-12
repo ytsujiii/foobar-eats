@@ -17,6 +17,14 @@ const CartView = (props: Props): React.ReactElement => {
     return visible ? "inline-block" : "none";
   }, [visible]);
 
+  const Subtotal = useMemo(() => {
+    let total = 0;
+    cartItems.forEach((element) => {
+      total += element.content.price * element.count;
+    });
+    return total;
+  }, [cartItems]);
+
   return (
     <>
       <Box onClick={() => setVisible(false)} className={styles["overlay"]} sx={{ display: displayAttribute }}></Box>
@@ -40,7 +48,7 @@ const CartView = (props: Props): React.ReactElement => {
         </div>
         <div className={styles["subtotal-wrapper"]}>
           <Typography className={styles["subtotal-label"]}>Subtotal</Typography>
-          <Typography className={styles["subtotal-value"]}>$8.99</Typography>
+          <Typography className={styles["subtotal-value"]}>¥{Subtotal}</Typography>
         </div>
         <div className={styles["go-to-checkout-button-wrapper"]}>
           <Button onClick={onProceed} className={styles["go-to-checkout-button"]}>

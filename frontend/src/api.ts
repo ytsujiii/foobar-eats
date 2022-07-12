@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import Item from "./types/Item";
 
 const client = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://192.168.8.159:8080",
 });
 
 type EmptyObject = Record<string, never>;
