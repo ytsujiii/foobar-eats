@@ -2,25 +2,50 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, IconButton, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../api";
+import useCartContext from "../hooks/useCartContext";
 import Item from "../types/Item";
 import styles from "./ItemDetailPage.module.scss";
+
+type CountReducerAction = "increment" | "decrement";
 
 const ItemDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const { itemId: itemIdString } = useParams();
   const [item, setItem] = useState<Item>();
-  const [count, setCount] = useState<number>(0);
+  const { addItem } = useCartContext();
+
+  const countReducer = (state: number, action: CountReducerAction): number => {
+    switch (action) {
+      case "increment":
+        return state + 1;
+      case "decrement":
+        if (state <= 0) return 0;
+        return state - 1;
+    }
+  };
+  const [count, dispatch] = useReducer(countReducer, 0);
+
+  const itemId = useMemo(() => Number(itemIdString), [itemIdString]);
+  const amount = useMemo<number>(() => {
+    if (!item?.price) return 0;
+    return item.price * count;
+  }, [item, count]);
 
   useEffect(() => {
-    const itemId = Number(itemIdString);
-
     if (!itemId) return;
 
     Api.getItem(itemId).then((response) => setItem(response));
   }, [itemIdString]);
+
+  const addToCart = useCallback(() => {
+    if (!itemId || !item) return;
+
+    addItem(item, count);
+    navigate("/items");
+  }, [itemId, count, item, addItem]);
 
   return (
     <>
@@ -41,17 +66,17 @@ const ItemDetailPage = (): React.ReactElement => {
       </div>
       <Typography className={styles["heading"]}>Special Instructions</Typography>
       <div className={styles["count-input-form-group"]}>
-        <IconButton onClick={() => setCount(count - 1)} className={styles["count-button"]}>
+        <IconButton onClick={() => dispatch("decrement")} className={styles["count-button"]}>
           <RemoveIcon />
         </IconButton>
         <Typography className={styles["count-value"]}>{count}</Typography>
-        <IconButton onClick={() => setCount(count + 1)} className={styles["count-button"]}>
+        <IconButton onClick={() => dispatch("increment")} className={styles["count-button"]}>
           <AddIcon />
         </IconButton>
       </div>
       <div className={styles["footer"]}>
-        <Button onClick={() => navigate("/items")} className={styles["add-to-cart-button"]}>
-          Add to cart・$8.99
+        <Button onClick={addToCart} className={styles["add-to-cart-button"]}>
+          Add to cart{!amount || `・¥${amount}`}
         </Button>
       </div>
     </>
