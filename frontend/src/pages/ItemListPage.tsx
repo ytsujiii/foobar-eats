@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Button, CircularProgress, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../api";
@@ -16,7 +16,7 @@ import styles from "./ItemListPage.module.scss";
 const ItemListPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const [cartViewVisible, setCartViewVisible] = useState<boolean>(false);
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>();
   const { cartItems } = useCartContext();
 
   useEffect(() => {
@@ -33,14 +33,20 @@ const ItemListPage = (): React.ReactElement => {
         <ReceiptToggle className={styles["receipt-toggle"]} />
         <GroupOrderButton className={styles["group-order-button"]} />
         <SearchBar />
-        {items.map((item) => (
-          <MenuRow
-            key={item.itemId}
-            name={item.name}
-            price={item.price}
-            onClick={() => navigate(`/items/${item.itemId}`)}
-          />
-        ))}
+        {items ? (
+          items.map((item) => (
+            <MenuRow
+              key={item.itemId}
+              name={item.name}
+              price={item.price}
+              onClick={() => navigate(`/items/${item.itemId}`)}
+            />
+          ))
+        ) : (
+          <div className={styles["circular-wrapper"]}>
+            <CircularProgress color="success" />
+          </div>
+        )}
       </Container>
       <div className={styles["view-cart-button-wrapper"]}>
         <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>
