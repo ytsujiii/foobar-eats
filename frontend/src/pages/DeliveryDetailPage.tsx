@@ -4,12 +4,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Container, IconButton, ToggleButton, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../api";
 import ToggleButtonGroup from "../components/ToggleButtonGroup";
 import useCartContext from "../hooks/useCartContext";
-import Item from "../types/Item";
 import styles from "./DeliveryDetailPage.module.scss";
 
 const DeliveryDetailPage = (): React.ReactElement => {
@@ -22,8 +21,8 @@ const DeliveryDetailPage = (): React.ReactElement => {
     setAlignment(newAlignment);
   };
   const sendOrder = () => {
-    Api.sendOrder({customerId: 1,itemIds: [2,3],itemCounts: [0,0]})
-  }
+    Api.sendOrder({ customerId: 1, itemIds: [2, 3], itemCounts: [0, 0] });
+  };
 
   return (
     <>
