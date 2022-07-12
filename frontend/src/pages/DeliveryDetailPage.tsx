@@ -19,7 +19,10 @@ const DeliveryDetailPage = (): React.ReactElement => {
     setAlignment(newAlignment);
   };
   const sendOrder = () => {
-    Api.sendOrder({customerId: 1,itemIds: [2,3],itemCounts: [0,0]})
+    Api.sendOrder({ customerId: 1, itemIds: [2, 3], itemCounts: [0, 0] })
+      .then(() => {
+        navigate("/orders")
+      })
   }
 
   return (
