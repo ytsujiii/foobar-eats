@@ -32,8 +32,13 @@ const ItemListPage = (): React.ReactElement => {
         <SearchBar />
         {items ? (
           <>
-            {items.map((item) => (
-              <MenuRow key={item.itemId} item={item} onClick={() => navigate(`/items/${item.itemId}`)} />
+            {items.map((item, index) => (
+              <MenuRow
+                key={item.itemId}
+                item={item}
+                onClick={() => navigate(`/items/${item.itemId}`)}
+                isPopular={index % 3 === 0}
+              />
             ))}
             <DeadBeefMenuRow />
           </>

@@ -6,11 +6,12 @@ import YenString from "./YenString";
 
 interface Props {
   item: Item;
+  isPopular?: boolean;
   onClick?: () => void;
 }
 
 const MenuRow = (props: Props): React.ReactElement => {
-  const { item, onClick } = props;
+  const { item, isPopular, onClick } = props;
 
   return (
     <div className={styles["menu-row"]} onClick={onClick}>
@@ -20,7 +21,7 @@ const MenuRow = (props: Props): React.ReactElement => {
           <YenString price={item.price} />
         </Typography>
         <Typography className={styles["description"]}>{item.description}</Typography>
-        <Chip color="success" label="Popular" />
+        {!isPopular || <Chip color="success" label="Popular" />}
       </div>
       <div className={styles["thumbnail-wrapper"]}>
         <img className={styles["thumbnail"]} src={item.imagePath} alt="" />
