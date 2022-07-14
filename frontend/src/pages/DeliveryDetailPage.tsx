@@ -110,13 +110,13 @@ const DeliveryDetailPage = (): React.ReactElement => {
                   <YenString price={item.content.price} />
                 </Typography>
               </div>
-              <div className={styles["add-item-button-row"]}>
-                <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
-                  Add items
-                </Button>
-              </div>
             </div>
           ))}
+          <div className={styles["add-item-button-row"]}>
+            <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
+              Add items
+            </Button>
+          </div>
         </div>
 
         <div className={styles["fee-detail"]}>
