@@ -37,11 +37,11 @@ public class Repository implements AutoCloseable {
       loadCustomerIfNotExists(transaction, 1, "Yamada Taro", 10000, 0);
       loadCustomerIfNotExists(transaction, 2, "Yamada Hanako", 10000, 0);
       loadCustomerIfNotExists(transaction, 3, "Suzuki Ichiro", 10000, 0);
-      loadItemIfNotExists(transaction, 1, "Apple", 1000);
-      loadItemIfNotExists(transaction, 2, "Orange", 2000);
-      loadItemIfNotExists(transaction, 3, "Grape", 2500);
-      loadItemIfNotExists(transaction, 4, "Mango", 5000);
-      loadItemIfNotExists(transaction, 5, "Melon", 3000);
+      loadItemIfNotExists(transaction, 1, "Pepperoni supreme Pizza", 1100);
+      loadItemIfNotExists(transaction, 2, "Panner Tikka Pizza", 1500);
+      loadItemIfNotExists(transaction, 3, "Seattle Special Pizza", 1400);
+      loadItemIfNotExists(transaction, 4, "Tandoori Chicken Pizza", 1300);
+      loadItemIfNotExists(transaction, 5, "BBQ Chicken Pizza", 1200);
       transaction.commit();
     } catch (TransactionException e) {
       if (transaction != null) {
