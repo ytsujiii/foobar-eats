@@ -19,7 +19,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
 
   const [alignment, setAlignment] = useState<"delivery" | "pickup" | string>("delivery");
   const [loading, setLoading] = useState<boolean>(false);
-  const { cartItems, total } = useCartContext();
+  const { cartItems, total, refreshCart } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
@@ -40,7 +40,10 @@ const DeliveryDetailPage = (): React.ReactElement => {
 
     setLoading(true);
     Api.sendOrder(order)
-      .then(() => navigate("/orders"))
+      .then(() => {
+        refreshCart();
+        navigate("/orders");
+      })
       .catch((err) => {
         setLoading(false);
         console.log(err);

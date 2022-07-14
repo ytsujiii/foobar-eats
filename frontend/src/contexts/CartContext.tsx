@@ -12,6 +12,7 @@ interface CartContextType {
   addItem: (item: Item, count: number) => void;
   incrementItem: (item: Item) => void;
   decrementItem: (itemId: number) => void;
+  refreshCart: () => void;
 }
 
 const defaultValue: CartContextType = {
@@ -24,6 +25,9 @@ const defaultValue: CartContextType = {
     /* do nothing */
   },
   decrementItem: () => {
+    /* do nothing */
+  },
+  refreshCart: () => {
     /* do nothing */
   },
 };
@@ -70,6 +74,10 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
     setCartItems(newCartItems);
   }, []);
 
+  const refreshCart = useCallback(() => {
+    setCartItems([]);
+  }, []);
+
   const total = useMemo(() => {
     let total = 0;
     cartItems.forEach((element) => {
@@ -79,7 +87,7 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
   }, [cartItems]);
 
   return (
-    <CartContext.Provider value={{ cartItems, incrementItem, decrementItem, addItem, total }}>
+    <CartContext.Provider value={{ cartItems, incrementItem, decrementItem, refreshCart, addItem, total }}>
       {props.children}
     </CartContext.Provider>
   );
