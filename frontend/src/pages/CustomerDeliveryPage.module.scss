@@ -1,80 +1,80 @@
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
 
-    .header-arrow {
-        left: -6px;
-        position: absolute;
-        color: black;
+  .header-arrow {
+    left: -6px;
+    position: absolute;
+    color: black;
 
-        .arrow-icon {
-            font-size: 30px;
-        }
+    .arrow-icon {
+      font-size: 30px;
     }
+  }
 
-    .header-caption {
-        font-size: 17px;
-    }
+  .header-caption {
+    font-size: 17px;
+  }
 }
 
 .orders {
-    margin: 0 10px;
+  margin: 0 10px;
 
-    .caption {
-        display: flex;
-        height: 50px;
-        align-items: center;
+  .caption {
+    display: flex;
+    height: 50px;
+    align-items: center;
 
-        .caption-text {
-            font-size: 17px;
-        }
+    .caption-text {
+      font-size: 17px;
+    }
+  }
+
+  .order-row {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    border-bottom: solid 0.1px #aaa;
+
+    .thumbnail-wrapper {
+      height: 70px;
+      width: 70px;
+
+      .thumbnail {
+        height: 100%;
+        width: 100%;
+      }
     }
 
-    .order-row {
-        display: flex;
-        align-items: center;
-        height: 100px;
-        border-bottom: solid 0.1px #aaa;
+    .ordered-detail {
+      width: 45%;
+      padding: 0 20px;
 
-        .thumbnail-wrapper {
-            height: 70px;
-            width: 70px;
+      .ordered-shop {
+        font-size: 1.1em;
+      }
 
-            .thumbnail {
-                height: 100%;
-                width: 100%;
-            }
-        }
+      .ordered-item-number {
+        font-size: 0.8em;
+        color: #aaa;
+      }
 
-        .ordered-detail {
-            width: 45%;
-            padding: 0 20px;
-
-            .ordered-shop {
-                font-size: 1.1em;
-            }
-
-            .ordered-item-number {
-                font-size: .8em;
-                color: #aaa;
-            }
-
-            .ordered-date {
-                font-size: .8em;
-                color: #aaa;
-            }
-        }
-
-        .menu-button {
-            background-color: #eee;
-            width: 90px;
-            height: 34px;
-            font-size: .8em;
-            text-transform: none;
-            color: black;
-            border-radius: 17px;
-        }
+      .ordered-date {
+        font-size: 0.8em;
+        color: #aaa;
+      }
     }
+
+    .menu-button {
+      background-color: #eee;
+      width: 90px;
+      height: 34px;
+      font-size: 0.8em;
+      text-transform: none;
+      color: black;
+      border-radius: 17px;
+    }
+  }
 }
