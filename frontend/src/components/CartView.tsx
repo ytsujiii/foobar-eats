@@ -12,19 +12,11 @@ interface Props {
 
 const CartView = (props: Props): React.ReactElement => {
   const { visible, setVisible, onProceed } = props;
-  const { cartItems } = useCartContext();
+  const { cartItems, total } = useCartContext();
 
   const displayAttribute = useMemo<"inline-block" | "none">(() => {
     return visible ? "inline-block" : "none";
   }, [visible]);
-
-  const Subtotal = useMemo(() => {
-    let total = 0;
-    cartItems.forEach((element) => {
-      total += element.content.price * element.count;
-    });
-    return total;
-  }, [cartItems]);
 
   return (
     <>
@@ -52,7 +44,7 @@ const CartView = (props: Props): React.ReactElement => {
         <div className={styles["subtotal-wrapper"]}>
           <Typography className={styles["subtotal-label"]}>Subtotal</Typography>
           <Typography className={styles["subtotal-value"]}>
-            <YenString price={Subtotal} />
+            <YenString price={total} />
           </Typography>
         </div>
         <div className={styles["go-to-checkout-button-wrapper"]}>
