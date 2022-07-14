@@ -39,42 +39,36 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
   }, [cartItems]);
 
   const findItem = useCallback((itemId: number): CartItem | undefined => {
-    return cartItems.find((item) => item.content.itemId === itemId);
+    return cartItemsRef.current.find((item) => item.content.itemId === itemId);
   }, []);
 
-  const addItem = useCallback(
-    (item: Item, count: number) => {
-      if (!findItem(item.itemId)) {
-        const newCartItems = [...cartItemsRef.current, { content: item, count }];
-        setCartItems(newCartItems);
-        return;
-      }
-
-      const newCartItems = cartItems.map((cartItem) => {
-        if (cartItem.content.itemId !== item.itemId) return cartItem;
-        return { ...cartItem, count: cartItem.count + count };
-      });
+  const addItem = useCallback((item: Item, count: number) => {
+    if (!findItem(item.itemId)) {
+      const newCartItems = [...cartItemsRef.current, { content: item, count }];
       setCartItems(newCartItems);
-    },
-    [findItem]
-  );
+      return;
+    }
+
+    const newCartItems = cartItemsRef.current.map((cartItem) => {
+      if (cartItem.content.itemId !== item.itemId) return cartItem;
+      return { ...cartItem, count: cartItem.count + count };
+    });
+    setCartItems(newCartItems);
+  }, []);
 
   const incrementItem = useCallback((item: Item) => addItem(item, 1), [addItem]);
 
-  const decrementItem = useCallback(
-    (itemId: number) => {
-      const targetItem = findItem(itemId);
-      if (!targetItem) return;
-      if (targetItem.count <= 0) return;
+  const decrementItem = useCallback((itemId: number) => {
+    const targetItem = findItem(itemId);
+    if (!targetItem) return;
+    if (targetItem.count <= 0) return;
 
-      const newCartItems = cartItems.map((cartItem) => {
-        if (cartItem.content.itemId !== itemId) return cartItem;
-        return { ...targetItem, count: cartItem.count - 1 };
-      });
-      setCartItems(newCartItems);
-    },
-    [findItem]
-  );
+    const newCartItems = cartItemsRef.current.map((cartItem) => {
+      if (cartItem.content.itemId !== itemId) return cartItem;
+      return { ...targetItem, count: cartItem.count - 1 };
+    });
+    setCartItems(newCartItems);
+  }, []);
 
   const total = useMemo(() => {
     let total = 0;
