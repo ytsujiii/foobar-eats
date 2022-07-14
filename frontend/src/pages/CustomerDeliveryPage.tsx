@@ -2,20 +2,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Api from "../api";
 import styles from "./CustomerDeliveryPage.module.scss";
 
 const CustomerDeliveryPage = (): React.ReactElement => {
   const navigate = useNavigate();
-
-  const [alignment, setAlignment] = React.useState("delivery");
-
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
-    setAlignment(newAlignment);
-  };
-  const sendOrder = () => {
-    Api.sendOrder({ customerId: 1, itemIds: [2, 3], itemCounts: [0, 0] });
-  };
 
   return (
     <>
