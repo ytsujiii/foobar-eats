@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Item from "../types/Item";
 
 interface CartItem {
@@ -8,7 +8,7 @@ interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
-  getTotal: () => number;
+  total: number;
   addItem: (item: Item, count: number) => void;
   incrementItem: (item: Item) => void;
   decrementItem: (itemId: number) => void;
@@ -16,7 +16,7 @@ interface CartContextType {
 
 const defaultValue: CartContextType = {
   cartItems: [],
-  getTotal: () => 0,
+  total: 0,
   addItem: () => {
     /* do nothing */
   },
@@ -32,6 +32,11 @@ const CartContext = React.createContext<CartContextType>(defaultValue);
 
 export const CartContextProvider = (props: { children: React.ReactNode }): React.ReactElement => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const cartItemsRef = useRef<CartItem[]>([]);
+
+  useEffect(() => {
+    cartItemsRef.current = cartItems;
+  }, [cartItems]);
 
   const findItem = useCallback((itemId: number): CartItem | undefined => {
     return cartItems.find((item) => item.content.itemId === itemId);
@@ -71,16 +76,16 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
     [findItem]
   );
 
-  const getTotal = () => {
+  const total = useMemo(() => {
     let total = 0;
     cartItems.forEach((element) => {
       total += element.content.price * element.count;
     });
     return total;
-  };
+  }, [cartItems]);
 
   return (
-    <CartContext.Provider value={{ cartItems, incrementItem, decrementItem, addItem, getTotal }}>
+    <CartContext.Provider value={{ cartItems, incrementItem, decrementItem, addItem, total }}>
       {props.children}
     </CartContext.Provider>
   );

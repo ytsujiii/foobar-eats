@@ -19,7 +19,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
 
   const [alignment, setAlignment] = useState<"delivery" | "pickup" | string>("delivery");
   const [loading, setLoading] = useState<boolean>(false);
-  const { cartItems, getTotal } = useCartContext();
+  const { cartItems, total } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
@@ -46,8 +46,6 @@ const DeliveryDetailPage = (): React.ReactElement => {
         console.log(err);
       });
   }, [cartItems]);
-
-  const total = getTotal();
 
   return (
     <>
