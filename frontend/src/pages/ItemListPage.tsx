@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Container, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AbstractRow from "../components/AbstractRow";
 import CartView from "../components/CartView";
@@ -17,6 +17,7 @@ const ItemListPage = (): React.ReactElement => {
   const [cartViewVisible, setCartViewVisible] = useState<boolean>(false);
   const { cartItems } = useCartContext();
   const { items } = useItemContext();
+  const showCartButtonVisible = useMemo<boolean>(() => cartItems.length > 0, [cartItems]);
 
   return (
     <>
@@ -43,11 +44,13 @@ const ItemListPage = (): React.ReactElement => {
           </div>
         )}
       </Container>
-      <div className={styles["view-cart-button-wrapper"]}>
-        <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>
-          View cart ({cartItems.length})
-        </Button>
-      </div>
+      {!showCartButtonVisible || (
+        <div className={styles["view-cart-button-wrapper"]}>
+          <Button onClick={() => setCartViewVisible(true)} className={styles["view-cart-button"]}>
+            View cart ({cartItems.length})
+          </Button>
+        </div>
+      )}
       <CartView visible={cartViewVisible} setVisible={setCartViewVisible} onProceed={() => navigate("/delivery")} />
     </>
   );
