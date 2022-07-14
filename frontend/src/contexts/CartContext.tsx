@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useState } from "react";
 import Item from "../types/Item";
 
 interface CartItem {
@@ -31,23 +31,24 @@ const defaultValue: CartContextType = {
 const CartContext = React.createContext<CartContextType>(defaultValue);
 
 export const CartContextProvider = (props: { children: React.ReactNode }): React.ReactElement => {
-  const cartItems = useRef<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const findItem = useCallback((itemId: number): CartItem | undefined => {
-    return cartItems.current.find((item) => item.content.itemId === itemId);
+    return cartItems.find((item) => item.content.itemId === itemId);
   }, []);
 
   const addItem = useCallback(
     (item: Item, count: number) => {
       if (!findItem(item.itemId)) {
-        cartItems.current.push({ content: item, count });
+        cartItems.push({ content: item, count });
         return;
       }
 
-      cartItems.current = cartItems.current.map((cartItem) => {
+      const newCartItems = cartItems.map((cartItem) => {
         if (cartItem.content.itemId !== item.itemId) return cartItem;
         return { ...cartItem, count: cartItem.count + count };
       });
+      setCartItems(newCartItems);
     },
     [findItem]
   );
@@ -60,24 +61,25 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
       if (!targetItem) return;
       if (targetItem.count <= 0) return;
 
-      cartItems.current = cartItems.current.map((cartItem) => {
+      const newCartItems = cartItems.map((cartItem) => {
         if (cartItem.content.itemId !== itemId) return cartItem;
         return { ...targetItem, count: cartItem.count - 1 };
       });
+      setCartItems(newCartItems);
     },
     [findItem]
   );
 
   const getTotal = () => {
     let total = 0;
-    cartItems.current.forEach((element) => {
+    cartItems.forEach((element) => {
       total += element.content.price * element.count;
     });
     return total;
   };
 
   return (
-    <CartContext.Provider value={{ cartItems: cartItems.current, incrementItem, decrementItem, addItem, getTotal }}>
+    <CartContext.Provider value={{ cartItems, incrementItem, decrementItem, addItem, getTotal }}>
       {props.children}
     </CartContext.Provider>
   );
