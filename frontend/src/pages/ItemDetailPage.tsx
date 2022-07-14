@@ -4,6 +4,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, IconButton, Typography } from "@mui/material";
 import React, { useCallback, useMemo, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import YenString from "../components/YenString";
 import useCartContext from "../hooks/useCartContext";
 import useItemContext from "../hooks/useItemContext";
 import Item from "../types/Item";
@@ -54,7 +55,7 @@ const ItemDetailPage = (): React.ReactElement => {
       </div>
       <div className={styles["abstract"]}>
         <Typography variant="h5">{item?.name}</Typography>
-        <Typography variant="h6">¥{item?.price}</Typography>
+        <Typography variant="h6">{!item || <YenString price={item.price} />}</Typography>
         <Typography className={styles["description"]}>
           A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
         </Typography>
@@ -71,7 +72,12 @@ const ItemDetailPage = (): React.ReactElement => {
       </div>
       <div className={styles["footer"]}>
         <Button onClick={addToCart} className={styles["add-to-cart-button"]}>
-          Add to cart{!amount || `・¥${amount}`}
+          Add to cart
+          {!amount || (
+            <>
+              ・<YenString price={amount} />
+            </>
+          )}
         </Button>
       </div>
     </>

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Api from "../api";
 import ProgressHover from "../components/ProgressHover";
 import ToggleButtonGroup from "../components/ToggleButtonGroup";
+import YenString from "../components/YenString";
 import useCartContext from "../hooks/useCartContext";
 import Order from "../types/Order";
 import styles from "./DeliveryDetailPage.module.scss";
@@ -107,7 +108,9 @@ const DeliveryDetailPage = (): React.ReactElement => {
                     A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
                   </Typography>
                 </div>
-                <Typography className={styles["price"]}>¥{item.content.price}</Typography>
+                <Typography className={styles["price"]}>
+                  <YenString price={item.content.price} />
+                </Typography>
               </div>
               <div className={styles["add-item-button-row"]}>
                 <Button className={styles["add-item-button"]} startIcon={<AddIcon />}>
@@ -121,21 +124,28 @@ const DeliveryDetailPage = (): React.ReactElement => {
         <div className={styles["fee-detail"]}>
           <div className={styles["fee-row"]}>
             <Typography>Subtotal</Typography>
-            <Typography>¥{total}</Typography>
+            <Typography>
+              <YenString price={total} />
+            </Typography>
           </div>
           <div className={styles["fee-row"]}>
             <Typography>Delivery Fee</Typography>
-            <Typography>¥0</Typography>
+            <Typography>
+              <YenString price={0} />
+            </Typography>
           </div>
           <div className={styles["fee-row"]}>
             <Typography className={styles["label-total"]}>Total</Typography>
-            <Typography className={styles["value-total"]}>¥{total}</Typography>
+            <Typography className={styles["value-total"]}>
+              <YenString price={total} />
+            </Typography>
           </div>
         </div>
       </Container>
       <div className={styles["footer"]}>
         <Button onClick={sendOrder} className={styles["confirm-button"]}>
-          Confirm・¥{total}
+          Confirm・
+          <YenString price={total} />
         </Button>
       </div>
       {!loading || <ProgressHover />}

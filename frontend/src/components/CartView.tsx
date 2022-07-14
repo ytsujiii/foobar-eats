@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import React, { useMemo } from "react";
 import useCartContext from "../hooks/useCartContext";
 import styles from "./CartView.module.scss";
+import YenString from "./YenString";
 
 interface Props {
   visible: boolean;
@@ -42,13 +43,17 @@ const CartView = (props: Props): React.ReactElement => {
                   A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
                 </Typography>
               </div>
-              <Typography className={styles["price"]}>¥{item.content.price * item.count}</Typography>
+              <Typography className={styles["price"]}>
+                <YenString price={item.content.price * item.count} />
+              </Typography>
             </div>
           ))}
         </div>
         <div className={styles["subtotal-wrapper"]}>
           <Typography className={styles["subtotal-label"]}>Subtotal</Typography>
-          <Typography className={styles["subtotal-value"]}>¥{Subtotal}</Typography>
+          <Typography className={styles["subtotal-value"]}>
+            <YenString price={Subtotal} />
+          </Typography>
         </div>
         <div className={styles["go-to-checkout-button-wrapper"]}>
           <Button onClick={onProceed} className={styles["go-to-checkout-button"]}>

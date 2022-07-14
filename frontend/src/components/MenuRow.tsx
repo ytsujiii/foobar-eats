@@ -1,6 +1,7 @@
 import { Chip, Typography } from "@mui/material";
 import React from "react";
 import styles from "./MenuRow.module.scss";
+import YenString from "./YenString";
 
 interface Props {
   name: string;
@@ -15,7 +16,9 @@ const MenuRow = (props: Props): React.ReactElement => {
     <div className={styles["menu-row"]} onClick={onClick}>
       <div className={styles["left"]}>
         <Typography className={styles["name"]}>{name}</Typography>
-        <Typography className={styles["price"]}>¥{price}</Typography>
+        <Typography className={styles["price"]}>
+          <YenString price={price} />
+        </Typography>
         <Typography className={styles["description"]}>
           A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
         </Typography>
