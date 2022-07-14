@@ -4,9 +4,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Container, IconButton, ToggleButton, Typography } from "@mui/material";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../api";
+import ProgressHover from "../components/ProgressHover";
 import ToggleButtonGroup from "../components/ToggleButtonGroup";
 import useCartContext from "../hooks/useCartContext";
 import Order from "../types/Order";
@@ -15,7 +16,8 @@ import styles from "./DeliveryDetailPage.module.scss";
 const DeliveryDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
 
-  const [alignment, setAlignment] = React.useState("delivery");
+  const [alignment, setAlignment] = useState<"delivery" | "pickup" | string>("delivery");
+  const [loading, setLoading] = useState<boolean>(false);
   const { cartItems, getTotal } = useCartContext();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
@@ -34,7 +36,14 @@ const DeliveryDetailPage = (): React.ReactElement => {
       itemIds: itemIds,
       itemCounts: itemCounts,
     };
-    Api.sendOrder(order).then(() => navigate("/orders"));
+
+    setLoading(true);
+    Api.sendOrder(order)
+      .then(() => navigate("/orders"))
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   }, [cartItems]);
 
   const total = getTotal();
@@ -129,6 +138,7 @@ const DeliveryDetailPage = (): React.ReactElement => {
           Confirm・¥{total}
         </Button>
       </div>
+      {!loading || <ProgressHover />}
     </>
   );
 };
