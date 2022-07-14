@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AbstractRow from "../components/AbstractRow";
 import CartView from "../components/CartView";
+import DeadBeefMenuRow from "../components/DeadBeefMenuRow";
 import GroupOrderButton from "../components/GroupOrderButton";
 import Header from "../components/Header";
 import MenuRow from "../components/MenuRow";
@@ -34,6 +35,7 @@ const ItemListPage = (): React.ReactElement => {
             {items.map((item) => (
               <MenuRow key={item.itemId} item={item} onClick={() => navigate(`/items/${item.itemId}`)} />
             ))}
+            <DeadBeefMenuRow />
           </>
         ) : (
           <div className={styles["circular-wrapper"]}>
