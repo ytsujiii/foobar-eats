@@ -35,6 +35,7 @@ const ItemDetailPage = (): React.ReactElement => {
     if (!item?.price) return 0;
     return item.price * count;
   }, [item, count]);
+  const addToCartButtonDisabled = useMemo<boolean>(() => count <= 0, [count]);
 
   const addToCart = useCallback(() => {
     if (!itemId || !item) return;
@@ -69,7 +70,7 @@ const ItemDetailPage = (): React.ReactElement => {
         </IconButton>
       </div>
       <div className={styles["footer"]}>
-        <Button onClick={addToCart} className={styles["add-to-cart-button"]}>
+        <Button onClick={addToCart} disabled={addToCartButtonDisabled} className={styles["add-to-cart-button"]}>
           Add to cart
           {amount ? (
             <>
