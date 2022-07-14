@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { itemDescriptions, itemImagePaths } from "./mock";
 import Item from "./types/Item";
 import Order from "./types/Order";
 
@@ -20,9 +21,19 @@ export default class Api {
   }
 
   public static async getItems(): Promise<Item[]> {
-    return await this.request({
+    const response: Item[] = (await this.request({
       url: `/items`,
       method: "GET",
+    })) as Item[];
+
+    // mock item descriptions and imagePaths
+    return response.map((item, i) => {
+      const index = i % itemDescriptions.length;
+      return {
+        ...item,
+        description: itemDescriptions[index],
+        imagePath: itemImagePaths[index],
+      };
     });
   }
 

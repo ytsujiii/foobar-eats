@@ -30,14 +30,11 @@ const ItemListPage = (): React.ReactElement => {
         <GroupOrderButton className={styles["group-order-button"]} />
         <SearchBar />
         {items ? (
-          items.map((item) => (
-            <MenuRow
-              key={item.itemId}
-              name={item.name}
-              price={item.price}
-              onClick={() => navigate(`/items/${item.itemId}`)}
-            />
-          ))
+          <>
+            {items.map((item) => (
+              <MenuRow key={item.itemId} item={item} onClick={() => navigate(`/items/${item.itemId}`)} />
+            ))}
+          </>
         ) : (
           <div className={styles["circular-wrapper"]}>
             <CircularProgress color="success" />

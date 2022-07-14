@@ -51,14 +51,12 @@ const ItemDetailPage = (): React.ReactElement => {
         </IconButton>
       </div>
       <div className={styles["thumbnail-wrapper"]}>
-        <img className={styles["thumbnail"]} src="/images/pizza1.jpg" alt="" />
+        <img className={styles["thumbnail"]} src={item?.imagePath} alt="" />
       </div>
       <div className={styles["abstract"]}>
         <Typography variant="h5">{item?.name}</Typography>
-        <Typography variant="h6">{!item || <YenString price={item.price} />}</Typography>
-        <Typography className={styles["description"]}>
-          A deluxe traditional Hawaiian pizza loaded with ham, pineapple, and mozzarella cheese.
-        </Typography>
+        <Typography variant="h6">{item ? <YenString price={item.price} /> : ""}</Typography>
+        <Typography className={styles["description"]}>{item?.description}</Typography>
       </div>
       <Typography className={styles["heading"]}>Special Instructions</Typography>
       <div className={styles["count-input-form-group"]}>
@@ -73,10 +71,12 @@ const ItemDetailPage = (): React.ReactElement => {
       <div className={styles["footer"]}>
         <Button onClick={addToCart} className={styles["add-to-cart-button"]}>
           Add to cart
-          {!amount || (
+          {amount ? (
             <>
               ・<YenString price={amount} />
             </>
+          ) : (
+            ""
           )}
         </Button>
       </div>
