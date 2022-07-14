@@ -177,5 +177,9 @@ $footer-height: 110px;
     border-radius: 0;
     height: 50px;
     font-size: 1.1em;
+
+    &:hover {
+      background-color: black;
+    }
   }
 }
