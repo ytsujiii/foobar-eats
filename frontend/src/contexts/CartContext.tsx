@@ -40,7 +40,8 @@ export const CartContextProvider = (props: { children: React.ReactNode }): React
   const addItem = useCallback(
     (item: Item, count: number) => {
       if (!findItem(item.itemId)) {
-        cartItems.push({ content: item, count });
+        const newCartItems = [...cartItemsRef.current, { content: item, count }];
+        setCartItems(newCartItems);
         return;
       }
 
