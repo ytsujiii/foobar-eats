@@ -1,11 +1,11 @@
 DOCKER_COMPOSE := docker compose
 
 up:
-	$(DOCKER_COMPOSE) up -d mysql cassandra schema-loader web-server
+	$(DOCKER_COMPOSE) up -d mysql cassandra schema-loader web-api
 down:
 	$(DOCKER_COMPOSE) down
 web:
-	$(DOCKER_COMPOSE) exec web-server bash
+	$(DOCKER_COMPOSE) exec web-api make run
 build:
 	@make build-backend
 build-backend:

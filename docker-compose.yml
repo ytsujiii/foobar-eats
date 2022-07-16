@@ -35,10 +35,10 @@ services:
       - sample-network
     restart: on-failure
 
-  web-server:
+  web-api:
     build:
       context: .
-      dockerfile: ./infra/web-server/Dockerfile
+      dockerfile: ./infra/web-api/Dockerfile
     tty: true
     ports:
       - 8080:8080
