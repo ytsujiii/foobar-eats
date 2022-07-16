@@ -47,6 +47,18 @@ services:
     networks:
       - sample-network
 
+  web-server:
+    build:
+      context: .
+      dockerfile: ./infra/web-server/Dockerfile
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/home/src
+    networks:
+      - sample-network
+
   java:
     build:
       context: .
