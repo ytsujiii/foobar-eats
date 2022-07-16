@@ -10,3 +10,6 @@ build:
 	@make build-backend
 build-backend:
 	cd backend && ./gradlew build
+build-frontend:
+	cd frontend && npm run build
+
