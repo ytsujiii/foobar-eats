@@ -58,6 +58,7 @@ services:
       - ./frontend/package.json:/home/src/package.json
       - ./frontend/package-lock.json:/home/src/package-lock.json
       - ./frontend/tsconfig.json:/home/src/tsconfig.json
+      - ./frontend/.eslintrc.json:/home/src/.eslintrc.json
     networks:
       - sample-network
 
