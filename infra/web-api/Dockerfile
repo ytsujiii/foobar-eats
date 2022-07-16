@@ -9,4 +9,6 @@ COPY ./backend /home/src
 
 WORKDIR /home/src
 
+RUN ./gradlew build
+
 CMD ["java", "-jar", "./build/libs/sample-1.0-SNAPSHOT.jar"]
