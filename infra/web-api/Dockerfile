@@ -1,13 +1,12 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-  apt-get install -y openjdk-8-jdk wget unzip make
+  apt-get install -y openjdk-8-jdk && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home
-
-RUN wget https://services.gradle.org/distributions/gradle-7.0.2-bin.zip && \
-  unzip gradle-7.0.2-bin.zip && \
-  rm gradle-7.0.2-bin.zip && \
-  ln -s /home/gradle-7.0.2/bin/gradle /usr/local/bin/gradle
+COPY ./backend /home/src
 
 WORKDIR /home/src
+
+CMD ["java", "-jar", "./build/libs/sample-1.0-SNAPSHOT.jar"]
