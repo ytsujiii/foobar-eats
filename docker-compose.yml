@@ -53,7 +53,11 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./frontend:/home/src
+      - ./frontend/src:/home/src/src
+      - ./frontend/public:/home/src/public
+      - ./frontend/package.json:/home/src/package.json
+      - ./frontend/package-lock.json:/home/src/package-lock.json
+      - ./frontend/tsconfig.json:/home/src/tsconfig.json
     networks:
       - sample-network
 
